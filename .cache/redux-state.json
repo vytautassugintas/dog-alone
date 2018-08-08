@@ -16,7 +16,7 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "f0799a9a042aec528a1e02f6dcc3486e",
+        "contentDigest": "fe83e6c9861859c8d46432da7f84e43f",
         "description": "Plugin dev-404-page",
         "owner": "internal-data-bridge"
       }
@@ -414,18 +414,16 @@
     },
     "Site": {
       "siteMetadata": {
-        "title": "Gatsby Default Starter"
+        "title": "Dog Alone"
       },
       "port": "8000",
       "host": "localhost",
-      "pathPrefix": "",
-      "polyfill": true,
-      "buildTime": "2018-08-01T18:37:18.776Z",
+      "buildTime": "2018-08-08T18:38:53.031Z",
       "id": "Site",
       "parent": "SOURCE",
       "children": [],
       "internal": {
-        "contentDigest": "019815b5624400055b494e4d7ad926b5",
+        "contentDigest": "26739e012a7167ed6f363c8ab3a52b9d",
         "type": "Site",
         "owner": "internal-data-bridge"
       }
@@ -446,7 +444,7 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "2207827c473f2df95e44acd52e3eb26c",
+        "contentDigest": "2f8f1ac2e5e8a51426ea0df0dfb9e6cc",
         "description": "Plugin gatsby-plugin-page-creator",
         "owner": "internal-data-bridge"
       }
@@ -467,28 +465,7 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "fe6842b328512a3e27bb18eb3e7d57f6",
-        "description": "Plugin gatsby-plugin-page-creator",
-        "owner": "internal-data-bridge"
-      }
-    },
-    "SitePage /page-2/": {
-      "layout": "index",
-      "jsonName": "page-2.json",
-      "internalComponentName": "ComponentPage2",
-      "path": "/page-2/",
-      "component": "/Users/vytautassugintas/Projects/dog-alone/src/pages/page-2.js",
-      "componentChunkName": "component---src-pages-page-2-js",
-      "context": {},
-      "pluginCreator___NODE": "Plugin gatsby-plugin-page-creator",
-      "pluginCreatorId": "Plugin gatsby-plugin-page-creator",
-      "componentPath": "/Users/vytautassugintas/Projects/dog-alone/src/pages/page-2.js",
-      "id": "SitePage /page-2/",
-      "parent": "SOURCE",
-      "children": [],
-      "internal": {
-        "type": "SitePage",
-        "contentDigest": "893a5057714ad4a20d5980c6337db75f",
+        "contentDigest": "1d506b984f9c2bd0d53af9548b3a9d11",
         "description": "Plugin gatsby-plugin-page-creator",
         "owner": "internal-data-bridge"
       }
@@ -509,8 +486,29 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "26038cae1f2ffa3c723c9b65683fd367",
+        "contentDigest": "d51210ac95a953853d61b6d9a1aebb1e",
         "description": "Plugin prod-404",
+        "owner": "internal-data-bridge"
+      }
+    },
+    "SitePage /stats/": {
+      "layout": "index",
+      "jsonName": "stats.json",
+      "internalComponentName": "ComponentStats",
+      "path": "/stats/",
+      "component": "/Users/vytautassugintas/Projects/dog-alone/src/pages/stats.js",
+      "componentChunkName": "component---src-pages-stats-js",
+      "context": {},
+      "pluginCreator___NODE": "Plugin gatsby-plugin-page-creator",
+      "pluginCreatorId": "Plugin gatsby-plugin-page-creator",
+      "componentPath": "/Users/vytautassugintas/Projects/dog-alone/src/pages/stats.js",
+      "id": "SitePage /stats/",
+      "parent": "SOURCE",
+      "children": [],
+      "internal": {
+        "type": "SitePage",
+        "contentDigest": "abe8630643378e2ec17f78e0e314ae1d",
+        "description": "Plugin gatsby-plugin-page-creator",
         "owner": "internal-data-bridge"
       }
     }

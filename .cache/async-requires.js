@@ -5,7 +5,7 @@ exports.components = {
   "component---cache-dev-404-page-js": require("gatsby-module-loader?name=component---cache-dev-404-page-js!/Users/vytautassugintas/Projects/dog-alone/.cache/dev-404-page.js"),
   "component---src-pages-404-js": require("gatsby-module-loader?name=component---src-pages-404-js!/Users/vytautassugintas/Projects/dog-alone/src/pages/404.js"),
   "component---src-pages-index-js": require("gatsby-module-loader?name=component---src-pages-index-js!/Users/vytautassugintas/Projects/dog-alone/src/pages/index.js"),
-  "component---src-pages-page-2-js": require("gatsby-module-loader?name=component---src-pages-page-2-js!/Users/vytautassugintas/Projects/dog-alone/src/pages/page-2.js")
+  "component---src-pages-stats-js": require("gatsby-module-loader?name=component---src-pages-stats-js!/Users/vytautassugintas/Projects/dog-alone/src/pages/stats.js")
 }
 
 exports.json = {
@@ -13,8 +13,8 @@ exports.json = {
   "dev-404-page.json": require("gatsby-module-loader?name=path---dev-404-page!/Users/vytautassugintas/Projects/dog-alone/.cache/json/dev-404-page.json"),
   "404.json": require("gatsby-module-loader?name=path---404!/Users/vytautassugintas/Projects/dog-alone/.cache/json/404.json"),
   "index.json": require("gatsby-module-loader?name=path---index!/Users/vytautassugintas/Projects/dog-alone/.cache/json/index.json"),
-  "page-2.json": require("gatsby-module-loader?name=path---page-2!/Users/vytautassugintas/Projects/dog-alone/.cache/json/page-2.json"),
-  "404-html.json": require("gatsby-module-loader?name=path---404-html!/Users/vytautassugintas/Projects/dog-alone/.cache/json/404-html.json")
+  "404-html.json": require("gatsby-module-loader?name=path---404-html!/Users/vytautassugintas/Projects/dog-alone/.cache/json/404-html.json"),
+  "stats.json": require("gatsby-module-loader?name=path---stats!/Users/vytautassugintas/Projects/dog-alone/.cache/json/stats.json")
 }
 
 exports.layouts = {
