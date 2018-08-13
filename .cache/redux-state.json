@@ -16,7 +16,7 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "fe83e6c9861859c8d46432da7f84e43f",
+        "contentDigest": "cf942c9eda0f492a7e035109deeff3cf",
         "description": "Plugin dev-404-page",
         "owner": "internal-data-bridge"
       }
@@ -280,7 +280,7 @@
       "resolve": "/Users/vytautassugintas/Projects/dog-alone",
       "id": "Plugin default-site-plugin",
       "name": "default-site-plugin",
-      "version": "a77c4ad8ddfd7c099694aea8fa852ba5",
+      "version": "7f161271993b9a895783f2cc32da2658",
       "pluginOptions": {
         "plugins": []
       },
@@ -328,7 +328,7 @@
       "parent": "SOURCE",
       "children": [],
       "internal": {
-        "contentDigest": "eda4f7f46b572dfb8112a83b06ee4c1c",
+        "contentDigest": "e129f705b5f4acc4682906bb4645a104",
         "type": "SitePlugin",
         "owner": "internal-data-bridge"
       }
@@ -418,12 +418,14 @@
       },
       "port": "8000",
       "host": "localhost",
-      "buildTime": "2018-08-08T18:38:53.031Z",
+      "pathPrefix": "",
+      "polyfill": true,
+      "buildTime": "2018-08-13T20:30:23.616Z",
       "id": "Site",
       "parent": "SOURCE",
       "children": [],
       "internal": {
-        "contentDigest": "26739e012a7167ed6f363c8ab3a52b9d",
+        "contentDigest": "7274e6d710a83246efa1a5160fd8a10d",
         "type": "Site",
         "owner": "internal-data-bridge"
       }
@@ -444,7 +446,7 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "2f8f1ac2e5e8a51426ea0df0dfb9e6cc",
+        "contentDigest": "ea912ab90be4b060d4598d2d2f8a3294",
         "description": "Plugin gatsby-plugin-page-creator",
         "owner": "internal-data-bridge"
       }
@@ -465,7 +467,28 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "1d506b984f9c2bd0d53af9548b3a9d11",
+        "contentDigest": "f287515bfd9504d35747b0402147a9f1",
+        "description": "Plugin gatsby-plugin-page-creator",
+        "owner": "internal-data-bridge"
+      }
+    },
+    "SitePage /stats/": {
+      "layout": "index",
+      "jsonName": "stats.json",
+      "internalComponentName": "ComponentStats",
+      "path": "/stats/",
+      "component": "/Users/vytautassugintas/Projects/dog-alone/src/pages/stats.js",
+      "componentChunkName": "component---src-pages-stats-js",
+      "context": {},
+      "pluginCreator___NODE": "Plugin gatsby-plugin-page-creator",
+      "pluginCreatorId": "Plugin gatsby-plugin-page-creator",
+      "componentPath": "/Users/vytautassugintas/Projects/dog-alone/src/pages/stats.js",
+      "id": "SitePage /stats/",
+      "parent": "SOURCE",
+      "children": [],
+      "internal": {
+        "type": "SitePage",
+        "contentDigest": "40f32de002e576371eba3765a0926476",
         "description": "Plugin gatsby-plugin-page-creator",
         "owner": "internal-data-bridge"
       }
@@ -486,36 +509,15 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "d51210ac95a953853d61b6d9a1aebb1e",
+        "contentDigest": "459636bbbb3102c686213dbcf3d1a7c9",
         "description": "Plugin prod-404",
-        "owner": "internal-data-bridge"
-      }
-    },
-    "SitePage /stats/": {
-      "layout": "index",
-      "jsonName": "stats.json",
-      "internalComponentName": "ComponentStats",
-      "path": "/stats/",
-      "component": "/Users/vytautassugintas/Projects/dog-alone/src/pages/stats.js",
-      "componentChunkName": "component---src-pages-stats-js",
-      "context": {},
-      "pluginCreator___NODE": "Plugin gatsby-plugin-page-creator",
-      "pluginCreatorId": "Plugin gatsby-plugin-page-creator",
-      "componentPath": "/Users/vytautassugintas/Projects/dog-alone/src/pages/stats.js",
-      "id": "SitePage /stats/",
-      "parent": "SOURCE",
-      "children": [],
-      "internal": {
-        "type": "SitePage",
-        "contentDigest": "abe8630643378e2ec17f78e0e314ae1d",
-        "description": "Plugin gatsby-plugin-page-creator",
         "owner": "internal-data-bridge"
       }
     }
   },
   "status": {
     "plugins": {},
-    "PLUGINS_HASH": "673643eb1ce4b27a13383d8dd93b20b9"
+    "PLUGINS_HASH": "87011d6d3228a5f8ffc0be8a4cbd2773"
   },
   "componentDataDependencies": {
     "nodes": {

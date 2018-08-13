@@ -13,8 +13,8 @@ exports.json = {
   "dev-404-page.json": require("gatsby-module-loader?name=path---dev-404-page!/Users/vytautassugintas/Projects/dog-alone/.cache/json/dev-404-page.json"),
   "404.json": require("gatsby-module-loader?name=path---404!/Users/vytautassugintas/Projects/dog-alone/.cache/json/404.json"),
   "index.json": require("gatsby-module-loader?name=path---index!/Users/vytautassugintas/Projects/dog-alone/.cache/json/index.json"),
-  "404-html.json": require("gatsby-module-loader?name=path---404-html!/Users/vytautassugintas/Projects/dog-alone/.cache/json/404-html.json"),
-  "stats.json": require("gatsby-module-loader?name=path---stats!/Users/vytautassugintas/Projects/dog-alone/.cache/json/stats.json")
+  "stats.json": require("gatsby-module-loader?name=path---stats!/Users/vytautassugintas/Projects/dog-alone/.cache/json/stats.json"),
+  "404-html.json": require("gatsby-module-loader?name=path---404-html!/Users/vytautassugintas/Projects/dog-alone/.cache/json/404-html.json")
 }
 
 exports.layouts = {

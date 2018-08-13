@@ -18,6 +18,6 @@ exports.json = {
   "dev-404-page.json": require("/Users/vytautassugintas/Projects/dog-alone/.cache/json/dev-404-page.json"),
   "404.json": require("/Users/vytautassugintas/Projects/dog-alone/.cache/json/404.json"),
   "index.json": require("/Users/vytautassugintas/Projects/dog-alone/.cache/json/index.json"),
-  "404-html.json": require("/Users/vytautassugintas/Projects/dog-alone/.cache/json/404-html.json"),
-  "stats.json": require("/Users/vytautassugintas/Projects/dog-alone/.cache/json/stats.json")
+  "stats.json": require("/Users/vytautassugintas/Projects/dog-alone/.cache/json/stats.json"),
+  "404-html.json": require("/Users/vytautassugintas/Projects/dog-alone/.cache/json/404-html.json")
 }
