@@ -36,6 +36,9 @@ export class AudioRecorder extends Component {
 
         this.mediaRecorder.onStop = () => {
             const audio = this.mediaRecorder.getAudio()
+            console.log(this.mediaRecorder.getAudioBlob());
+            console.log(this.mediaRecorder.startTime);
+            console.log(this.mediaRecorder.endTime);
             audio.play()
         }
 

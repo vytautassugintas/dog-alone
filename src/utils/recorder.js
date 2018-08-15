@@ -6,6 +6,9 @@ export class Recorder {
         this.audioCtx = new AudioContext()
         this.analyser = this.audioCtx.createAnalyser()
 
+        this.startTime;
+        this.endTime;
+
         this.onDataAvailable = () => {}
         this.onStop = () => {}
     }
@@ -30,15 +33,19 @@ export class Recorder {
                 this.source = this.audioCtx
                     .createMediaStreamSource(stream)
                     .connect(this.analyser)
-                return new MediaRecorder(stream)
+                return new MediaRecorder(stream, {
+                    audioBitsPerSecond: 12800,
+                })
             })
     }
 
     start(timeSlice) {
+        this.startTime = new Date();
         this.mediaRecorder.start(timeSlice)
     }
 
     stop() {
+        this.endTime = new Date();
         this.mediaRecorder.stop()
     }
 
