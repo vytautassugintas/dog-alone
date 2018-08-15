@@ -16,7 +16,7 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "fb082fd33c9914ff4110660434aaf0bf",
+        "contentDigest": "d01860f95b3b801794f06b6b127643fa",
         "description": "Plugin dev-404-page",
         "owner": "internal-data-bridge"
       }
@@ -420,12 +420,12 @@
       "host": "localhost",
       "pathPrefix": "",
       "polyfill": true,
-      "buildTime": "2018-08-13T21:15:17.456Z",
+      "buildTime": "2018-08-15T19:07:41.871Z",
       "id": "Site",
       "parent": "SOURCE",
       "children": [],
       "internal": {
-        "contentDigest": "7e5c9fefe9b048553cdc50578f0dd0dc",
+        "contentDigest": "d7233bb449fb6b9b9a32744d25840654",
         "type": "Site",
         "owner": "internal-data-bridge"
       }
@@ -446,7 +446,7 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "b1c37e5ca562ed47e1eedee320cbd7dd",
+        "contentDigest": "4cdbed45ee9f1942aec77d78322ad56d",
         "description": "Plugin gatsby-plugin-page-creator",
         "owner": "internal-data-bridge"
       }
@@ -467,7 +467,7 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "7c8a89e682a12d8d627497b40e906b8c",
+        "contentDigest": "83a912243a9100bca06ad6f23d92ae07",
         "description": "Plugin gatsby-plugin-page-creator",
         "owner": "internal-data-bridge"
       }
@@ -488,7 +488,7 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "d631c518bc172a3e1b8b3dde16815fe1",
+        "contentDigest": "dd37dd43aa67b38ccd1e086418e8c38b",
         "description": "Plugin gatsby-plugin-page-creator",
         "owner": "internal-data-bridge"
       }
@@ -509,7 +509,7 @@
       "children": [],
       "internal": {
         "type": "SitePage",
-        "contentDigest": "ef2fc8cd5e7a7b9af20f7cea1c25139f",
+        "contentDigest": "9a806a2a8877398f7124d71de6dee0b5",
         "description": "Plugin prod-404",
         "owner": "internal-data-bridge"
       }
@@ -522,7 +522,11 @@
   "componentDataDependencies": {
     "nodes": {
       "Site": [
-        "LAYOUT___index"
+        "LAYOUT___index",
+        "/"
+      ],
+      "SitePage /dev-404-page/": [
+        "/"
       ]
     },
     "connections": {

@@ -1,60 +1,56 @@
 export class Recorder {
-  constructor() {
-    this.mediaRecorder = {};
-    this.source = {};
-    this.audioChunks = [];
-    this.audioCtx = new AudioContext();
-    this.analyser = this.audioCtx.createAnalyser();
-    
-    this.onDataAvailable = () => {};
-    this.onStop = () => {};
-  }
+    constructor() {
+        this.mediaRecorder = {}
+        this.source = {}
+        this.audioChunks = []
+        this.audioCtx = new AudioContext()
+        this.analyser = this.audioCtx.createAnalyser()
 
-  async init(){
-    this.mediaRecorder = await this.createRecorder();
+        this.onDataAvailable = () => {}
+        this.onStop = () => {}
+    }
 
-    this.mediaRecorder.addEventListener("dataavailable", event => {
-      this.audioChunks.push(event.data);
-      this.onDataAvailable(event);
-    });
+    async init() {
+        this.mediaRecorder = await this.createRecorder()
 
-    this.mediaRecorder.addEventListener("stop", () => {
-      this.onStop();
-    });
-  }
+        this.mediaRecorder.addEventListener('dataavailable', event => {
+            this.audioChunks.push(event.data)
+            this.onDataAvailable(event)
+        })
 
-  createRecorder() {
-    return navigator
-      .mediaDevices
-      .getUserMedia({audio: true})
-      .then(stream => {
-        this.source = this.audioCtx
-            .createMediaStreamSource(stream)
-            .connect(this.analyser);
-        return new MediaRecorder(stream);
-      })
-  }
-  
-  start(timeSlice) {
-    this.mediaRecorder.start(timeSlice);   
-  }
+        this.mediaRecorder.addEventListener('stop', () => {
+            this.onStop()
+        })
+    }
 
-  stop(){
-    this.mediaRecorder.stop();
-  }
+    createRecorder() {
+        return navigator.mediaDevices
+            .getUserMedia({ audio: true })
+            .then(stream => {
+                this.source = this.audioCtx
+                    .createMediaStreamSource(stream)
+                    .connect(this.analyser)
+                return new MediaRecorder(stream)
+            })
+    }
 
-  getAudioBlob(){
-    return new Blob(this.audioChunks);
-  }
+    start(timeSlice) {
+        this.mediaRecorder.start(timeSlice)
+    }
 
-  getAudioUrl(){
-    return URL.createObjectURL(this.getAudioBlob());
-  }
+    stop() {
+        this.mediaRecorder.stop()
+    }
 
-  getAudio(){
-    return new Audio(this.getAudioUrl()); 
-  }
+    getAudioBlob() {
+        return new Blob(this.audioChunks)
+    }
 
+    getAudioUrl() {
+        return URL.createObjectURL(this.getAudioBlob())
+    }
+
+    getAudio() {
+        return new Audio(this.getAudioUrl())
+    }
 }
-
-
