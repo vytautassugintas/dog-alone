@@ -1,19 +1,18 @@
 import React, {Component} from 'react'
 import Link from 'gatsby-link'
 import {Recorder} from '../utils/recorder';
+import {calculateDecibels} from '../utils/decibels';
 
 const TIME_SLICE = 300;
+const FFT = 1024;
 
 export class AudioRecorder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isRecording: false,
-      isFinished: false
+      isRecording: false
     }
-
-    this.audioCtx = new AudioContext();
-    this.analyser = this.audioCtx.createAnalyser();
+    
     this.dataArray = []
 
     this.toggleRecording = this.toggleRecording.bind(this);
@@ -23,22 +22,20 @@ export class AudioRecorder extends Component {
     this.mediaRecorder = new Recorder();
     await this.mediaRecorder.init();
 
-    const audioChunks = [];
-
     this.bufferLength = this.mediaRecorder.analyser.frequencyBinCount;
     this.dataArray = new Uint8Array(this.bufferLength);
 
-    this.mediaRecorder.onDataAvailable = (event => {
-      audioChunks.push(event.data);
-      this.mediaRecorder.analyser.fftSize = 2048;
+    this.mediaRecorder.onDataAvailable = (() => {
+      this.mediaRecorder.analyser.fftSize = FFT;
       this.mediaRecorder.analyser.getByteTimeDomainData(this.dataArray);
+
+      const decibels = calculateDecibels(FFT, this.dataArray);
+
       this.draw();      
     })
 
     this.mediaRecorder.onStop = (() => {
-      const audioBlob = new Blob(audioChunks);
-      const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = new Audio(audioUrl);
+      const audio = this.mediaRecorder.getAudio();
       audio.play();
     })
 
@@ -63,7 +60,7 @@ export class AudioRecorder extends Component {
     this.canvasCtx.fillStyle = "rgb(200, 200, 200)";
     this.canvasCtx.fillRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
 
-    this.canvasCtx.lineWidth = 2;
+    this.canvasCtx.lineWidth = 1;
     this.canvasCtx.strokeStyle = "rgb(0, 0, 0)";
 
     this.canvasCtx.beginPath();

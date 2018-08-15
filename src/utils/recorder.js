@@ -2,9 +2,10 @@ export class Recorder {
   constructor() {
     this.mediaRecorder = {};
     this.source = {};
+    this.audioChunks = [];
     this.audioCtx = new AudioContext();
     this.analyser = this.audioCtx.createAnalyser();
-
+    
     this.onDataAvailable = () => {};
     this.onStop = () => {};
   }
@@ -13,6 +14,7 @@ export class Recorder {
     this.mediaRecorder = await this.createRecorder();
 
     this.mediaRecorder.addEventListener("dataavailable", event => {
+      this.audioChunks.push(event.data);
       this.onDataAvailable(event);
     });
 
@@ -20,15 +22,7 @@ export class Recorder {
       this.onStop();
     });
   }
-  
-  start(timeSlice) {
-    this.mediaRecorder.start(timeSlice);   
-  }
 
-  stop(){
-    this.mediaRecorder.stop();
-  }
-  
   createRecorder() {
     return navigator
       .mediaDevices
@@ -40,11 +34,25 @@ export class Recorder {
         return new MediaRecorder(stream);
       })
   }
-
-
   
-  async getRecorder() {
-    return await createRecorder();
+  start(timeSlice) {
+    this.mediaRecorder.start(timeSlice);   
+  }
+
+  stop(){
+    this.mediaRecorder.stop();
+  }
+
+  getAudioBlob(){
+    return new Blob(this.audioChunks);
+  }
+
+  getAudioUrl(){
+    return URL.createObjectURL(this.getAudioBlob());
+  }
+
+  getAudio(){
+    return new Audio(this.getAudioUrl()); 
   }
 
 }
