@@ -1,3 +1,6 @@
+// @see {@link https://en.wikipedia.org/wiki/Bit_rate}
+const BITS_PER_SECOND = 96 * 1000
+
 export class Recorder {
     constructor() {
         this.mediaRecorder = {}
@@ -6,8 +9,8 @@ export class Recorder {
         this.audioCtx = new AudioContext()
         this.analyser = this.audioCtx.createAnalyser()
 
-        this.startTime;
-        this.endTime;
+        this.startTime
+        this.endTime
 
         this.onDataAvailable = () => {}
         this.onStop = () => {}
@@ -34,18 +37,18 @@ export class Recorder {
                     .createMediaStreamSource(stream)
                     .connect(this.analyser)
                 return new MediaRecorder(stream, {
-                    audioBitsPerSecond: 12800,
+                    audioBitsPerSecond: BITS_PER_SECOND,
                 })
             })
     }
 
     start(timeSlice) {
-        this.startTime = new Date();
+        this.startTime = new Date()
         this.mediaRecorder.start(timeSlice)
     }
 
     stop() {
-        this.endTime = new Date();
+        this.endTime = new Date()
         this.mediaRecorder.stop()
     }
 

@@ -3,8 +3,8 @@ import Link from 'gatsby-link'
 import { Recorder } from '../utils/recorder'
 import { calculateDecibels } from '../utils/decibels'
 
-const TIME_SLICE = 300
-const FFT = 1024
+const TIME_SLICE = 60
+const FFT = 512
 
 export class AudioRecorder extends Component {
     constructor(props) {
@@ -30,15 +30,12 @@ export class AudioRecorder extends Component {
             this.mediaRecorder.analyser.getByteTimeDomainData(this.dataArray)
 
             const decibels = calculateDecibels(FFT, this.dataArray)
-
             this.draw(this.dataArray, this.bufferLength)
         }
 
         this.mediaRecorder.onStop = () => {
             const audio = this.mediaRecorder.getAudio()
-            console.log(this.mediaRecorder.getAudioBlob());
-            console.log(this.mediaRecorder.startTime);
-            console.log(this.mediaRecorder.endTime);
+
             audio.play()
         }
 
@@ -96,11 +93,16 @@ export class AudioRecorder extends Component {
         const { isRecording } = this.state
         return (
             <div>
-                <button onClick={this.toggleRecording}>
+                <p>Audio controller</p>
+                <button
+                    style={{ marginBottom: 12 }}
+                    onClick={this.toggleRecording}
+                >
                     {isRecording ? 'Stop recording' : 'Start recording'}
                 </button>
-                <p>Audio controller</p>
-                <canvas ref="canvas" width={640} height={480} />
+                <div>
+                    <canvas ref="canvas" width={640} height={480} />
+                </div>
             </div>
         )
     }
