@@ -59,25 +59,23 @@ export class AudioRecorder extends Component {
   draw() {
     this.canvasCtx.fillStyle = "rgb(200, 200, 200)";
     this.canvasCtx.fillRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
-
     this.canvasCtx.lineWidth = 1;
     this.canvasCtx.strokeStyle = "rgb(0, 0, 0)";
-
     this.canvasCtx.beginPath();
 
     let sliceWidth = this.canvas.width * 1.0 / this.bufferLength;
     let x = 0;
+    
+    this.dataArray.forEach((data, index) => {
+      let v = data / 128.0;
+      let y = v * this.canvas.height / 2; 
 
-    for (let i = 0; i < this.bufferLength; i++) {
-      let v = this.dataArray[i] / 128.0;
-      let y = v * this.canvas.height / 2;
-
-      i === 0
+      index === 0
         ? this.canvasCtx.moveTo(x, y)
         : this.canvasCtx.lineTo(x, y)
 
       x += sliceWidth;
-    }
+    })
 
     this.canvasCtx.lineTo(this.canvas.width, this.canvas.height / 2);
     this.canvasCtx.stroke();
