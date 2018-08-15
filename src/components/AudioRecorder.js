@@ -1,64 +1,67 @@
 import React, {Component} from 'react'
 import Link from 'gatsby-link'
-import {getRecorder} from '../utils/recorder';
+import {Recorder} from '../utils/recorder';
+
+const TIME_SLICE = 300;
 
 export class AudioRecorder extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isRecording: false,
       isFinished: false
     }
 
     this.audioCtx = new AudioContext();
     this.analyser = this.audioCtx.createAnalyser();
     this.dataArray = []
+
+    this.toggleRecording = this.toggleRecording.bind(this);
   }
 
   async componentDidMount() {
-    const recorder = await getRecorder();
-    this.mediaRecorder = recorder.mediaRecorder;
-    this.stream = recorder.stream;
+    this.mediaRecorder = new Recorder();
+    await this.mediaRecorder.init();
 
     const audioChunks = [];
 
-    let source = this.audioCtx.createMediaStreamSource(this.stream);
-    source.connect(this.analyser)
-
-    this.bufferLength = this.analyser.frequencyBinCount;
+    this.bufferLength = this.mediaRecorder.analyser.frequencyBinCount;
     this.dataArray = new Uint8Array(this.bufferLength);
 
-    const timeSlice = 300;
-
-    this.mediaRecorder.start(timeSlice);
-
-    this.mediaRecorder.addEventListener("dataavailable", event => {
+    this.mediaRecorder.onDataAvailable = (event => {
       audioChunks.push(event.data);
-      this.analyser.fftSize = 2048;
-      this.analyser.getByteTimeDomainData(this.dataArray);
+      this.mediaRecorder.analyser.fftSize = 2048;
+      this.mediaRecorder.analyser.getByteTimeDomainData(this.dataArray);
+      this.draw();      
+    })
 
-      this.draw();
-    });
-
-    this.mediaRecorder.addEventListener("stop", () => {
+    this.mediaRecorder.onStop = (() => {
       const audioBlob = new Blob(audioChunks);
       const audioUrl = URL.createObjectURL(audioBlob);
       const audio = new Audio(audioUrl);
       audio.play();
-    });
+    })
 
-    setTimeout(() => {
-      this.mediaRecorder.stop();
-    }, 3000);
+    this.canvas = this.refs.canvas;
+    this.canvasCtx = this.refs.canvas.getContext("2d");
+    this.draw();
+  }
 
-    this.canvas = document.getElementById("oscilloscope");
-    this.canvasCtx = this.canvas.getContext("2d");
+  toggleRecording(){
+    this.setState(prevState => ({
+      isRecording: !prevState.isRecording
+    }), () => {
+      if (this.state.isRecording) {
+        this.mediaRecorder.start(TIME_SLICE);
+      } else {
+        this.mediaRecorder.stop()
+      }
+    })
   }
 
   draw() {
-    this.analyser.getByteTimeDomainData(this.dataArray);
-
     this.canvasCtx.fillStyle = "rgb(200, 200, 200)";
-    this.canvasCtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.canvasCtx.fillRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
 
     this.canvasCtx.lineWidth = 2;
     this.canvasCtx.strokeStyle = "rgb(0, 0, 0)";
@@ -84,9 +87,14 @@ export class AudioRecorder extends Component {
   }
 
   render() {
+    const {isRecording} = this.state;
     return (
       <div>
+        <button onClick={this.toggleRecording}>
+          {isRecording ? 'Stop recording' : 'Start recording'}
+        </button>
         <p>Audio controller</p>
+        <canvas ref="canvas" width={640} height={480}/>
       </div>
     )
   }
