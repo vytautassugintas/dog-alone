@@ -2,22 +2,25 @@ import React, { Component } from 'react'
 import Link from 'gatsby-link'
 import { Recorder } from '../utils/recorder'
 import { calculateDecibels } from '../utils/decibels'
+import { saveBlob, getFileNameAppendix } from '../utils/file'
 
 const TIME_SLICE = 60
 const FFT = 512
+const AUDIO_FORMAT = 'mp4'
 
 export class AudioRecorder extends Component {
     constructor(props) {
         super(props)
         this.state = {
             isRecording: false,
+            recorded: false,
         }
 
         this.dataArray = []
 
         this.toggleRecording = this.toggleRecording.bind(this)
+        this.onSaveAudio = this.onSaveAudio.bind(this)
     }
-
     async componentDidMount() {
         this.mediaRecorder = new Recorder()
         await this.mediaRecorder.init()
@@ -35,13 +38,22 @@ export class AudioRecorder extends Component {
 
         this.mediaRecorder.onStop = () => {
             const audio = this.mediaRecorder.getAudio()
-
+            this.setState(() => ({
+                recorded: true,
+            }))
             audio.play()
         }
 
         this.canvas = this.refs.canvas
         this.canvasCtx = this.refs.canvas.getContext('2d')
         this.draw(this.dataArray, this.bufferLength)
+    }
+
+    onSaveAudio() {
+        saveBlob(
+            this.mediaRecorder.getAudioBlob(),
+            `ramplis_${getFileNameAppendix()}.${AUDIO_FORMAT}`
+        )
     }
 
     toggleRecording() {
@@ -90,16 +102,23 @@ export class AudioRecorder extends Component {
     }
 
     render() {
-        const { isRecording } = this.state
+        const { isRecording, recorded } = this.state
         return (
             <div>
                 <p>Audio controller</p>
-                <button
-                    style={{ marginBottom: 12 }}
-                    onClick={this.toggleRecording}
-                >
-                    {isRecording ? 'Stop recording' : 'Start recording'}
-                </button>
+                <div style={{ marginBottom: 12 }}>
+                    <button onClick={this.toggleRecording}>
+                        {isRecording ? 'Stop recording' : 'Start recording'}
+                    </button>
+                    {recorded && (
+                        <button
+                            style={{ marginLeft: 12 }}
+                            onClick={this.onSaveAudio}
+                        >
+                            Save
+                        </button>
+                    )}
+                </div>
                 <div>
                     <canvas ref="canvas" width={640} height={480} />
                 </div>
