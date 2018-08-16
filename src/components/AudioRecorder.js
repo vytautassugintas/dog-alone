@@ -22,6 +22,7 @@ export class AudioRecorder extends Component {
 
         this.toggleRecording = this.toggleRecording.bind(this)
         this.onSaveAudio = this.onSaveAudio.bind(this)
+        this.onPlayAudio = this.onPlayAudio.bind(this)
 
         this.startTimer = () => {}
         this.stopTimer = () => {}
@@ -45,11 +46,9 @@ export class AudioRecorder extends Component {
         }
 
         this.mediaRecorder.onStop = () => {
-            const audio = this.mediaRecorder.getAudio()
             this.setState(() => ({
                 recorded: true,
             }))
-            // audio.play()
         }
 
         this.canvas = this.refs.canvas
@@ -64,6 +63,11 @@ export class AudioRecorder extends Component {
         )
     }
 
+    onPlayAudio() {
+        const audio = this.mediaRecorder.getAudio()
+        audio.play()
+    }
+    
     toggleRecording() {
         this.setState(
             prevState => ({
@@ -131,12 +135,20 @@ export class AudioRecorder extends Component {
                         {isRecording ? 'Stop recording' : 'Start recording'}
                     </button>
                     {recorded && (
-                        <button
-                            style={{ marginLeft: 12 }}
-                            onClick={this.onSaveAudio}
-                        >
-                            Save
-                        </button>
+                        <span>
+                            <button
+                                style={{ marginLeft: 12 }}
+                                onClick={this.onSaveAudio}
+                            >
+                                Save
+                            </button>
+                            <button
+                                style={{ marginLeft: 12 }}
+                                onClick={this.onPlayAudio}
+                            >
+                                Play
+                            </button>
+                        </span>
                     )}
                 </div>
                 <div>
