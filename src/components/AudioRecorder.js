@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Link from 'gatsby-link'
+import { Timer } from './Timer'
 import { Recorder } from '../utils/recorder'
 import { calculateDecibels } from '../utils/decibels'
 import { saveBlob, getFileNameAppendix } from '../utils/file'
@@ -14,12 +15,16 @@ export class AudioRecorder extends Component {
         this.state = {
             isRecording: false,
             recorded: false,
+            recordingSize: 0,
         }
 
         this.dataArray = []
 
         this.toggleRecording = this.toggleRecording.bind(this)
         this.onSaveAudio = this.onSaveAudio.bind(this)
+
+        this.startTimer = () => {}
+        this.stopTimer = () => {}
     }
     async componentDidMount() {
         this.mediaRecorder = new Recorder()
@@ -30,8 +35,11 @@ export class AudioRecorder extends Component {
         this.dataArray = new Uint8Array(this.bufferLength)
 
         this.mediaRecorder.onDataAvailable = () => {
-            this.mediaRecorder.analyser.getByteTimeDomainData(this.dataArray)
-
+            const { analyser, recordingSize } = this.mediaRecorder
+            analyser.getByteTimeDomainData(this.dataArray)
+            this.setState(() => ({
+                recordingSize: recordingSize,
+            }))
             const decibels = calculateDecibels(FFT, this.dataArray)
             this.draw(this.dataArray, this.bufferLength)
         }
@@ -41,7 +49,7 @@ export class AudioRecorder extends Component {
             this.setState(() => ({
                 recorded: true,
             }))
-            audio.play()
+            // audio.play()
         }
 
         this.canvas = this.refs.canvas
@@ -64,8 +72,10 @@ export class AudioRecorder extends Component {
             () => {
                 if (this.state.isRecording) {
                     this.mediaRecorder.start(TIME_SLICE)
+                    this.timerInstanse.startTimer()
                 } else {
                     this.mediaRecorder.stop()
+                    this.timerInstanse.stopTimer()
                 }
             }
         )
@@ -101,11 +111,21 @@ export class AudioRecorder extends Component {
         this.canvasCtx.stroke()
     }
 
+    componentWillUnmount() {
+        clearInterval(this.interval)
+    }
+
     render() {
-        const { isRecording, recorded } = this.state
+        const { isRecording, recorded, recordingSize, time } = this.state
         return (
             <div>
                 <p>Audio controller</p>
+                <Timer
+                    ref={instance => {
+                        this.timerInstanse = instance
+                    }}
+                />
+                <p>{recordingSize / 1000000} mb</p>
                 <div style={{ marginBottom: 12 }}>
                     <button onClick={this.toggleRecording}>
                         {isRecording ? 'Stop recording' : 'Start recording'}

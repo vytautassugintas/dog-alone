@@ -8,7 +8,7 @@ export class Recorder {
         this.audioChunks = []
         this.audioCtx = new AudioContext()
         this.analyser = this.audioCtx.createAnalyser()
-
+        this.recordingSize = 0
         this.startTime
         this.endTime
 
@@ -22,6 +22,7 @@ export class Recorder {
         this.mediaRecorder.addEventListener('dataavailable', event => {
             this.audioChunks.push(event.data)
             this.onDataAvailable(event)
+            this.recordingSize += event.data.size
         })
 
         this.mediaRecorder.addEventListener('stop', () => {
