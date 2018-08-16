@@ -16,9 +16,10 @@ export class AudioRecorder extends Component {
             isRecording: false,
             recorded: false,
             recordingSize: 0,
+            decibels: 0,
         }
 
-        this.dataArray = []
+        this.dataArray = new Uint8Array(FFT)
 
         this.toggleRecording = this.toggleRecording.bind(this)
         this.onSaveAudio = this.onSaveAudio.bind(this)
@@ -33,15 +34,15 @@ export class AudioRecorder extends Component {
 
         this.mediaRecorder.analyser.fftSize = FFT
         this.bufferLength = this.mediaRecorder.analyser.frequencyBinCount
-        this.dataArray = new Uint8Array(this.bufferLength)
 
         this.mediaRecorder.onDataAvailable = () => {
             const { analyser, recordingSize } = this.mediaRecorder
             analyser.getByteTimeDomainData(this.dataArray)
+            const decibels = calculateDecibels(FFT, this.dataArray)
             this.setState(() => ({
                 recordingSize: recordingSize,
+                decibels,
             }))
-            const decibels = calculateDecibels(FFT, this.dataArray)
             this.draw(this.dataArray, this.bufferLength)
         }
 
@@ -67,7 +68,7 @@ export class AudioRecorder extends Component {
         const audio = this.mediaRecorder.getAudio()
         audio.play()
     }
-    
+
     toggleRecording() {
         this.setState(
             prevState => ({
@@ -120,7 +121,7 @@ export class AudioRecorder extends Component {
     }
 
     render() {
-        const { isRecording, recorded, recordingSize, time } = this.state
+        const { isRecording, recorded, recordingSize, decibels } = this.state
         return (
             <div>
                 <p>Audio controller</p>
@@ -129,7 +130,8 @@ export class AudioRecorder extends Component {
                         this.timerInstanse = instance
                     }}
                 />
-                <p>{recordingSize / 1000000} mb</p>
+                <div>{(recordingSize / 1000000).toFixed(2)} mb</div>
+                <div>{decibels.toFixed(2)} decibels</div>
                 <div style={{ marginBottom: 12 }}>
                     <button onClick={this.toggleRecording}>
                         {isRecording ? 'Stop recording' : 'Start recording'}
