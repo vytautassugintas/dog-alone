@@ -5,6 +5,11 @@ import Helmet from 'react-helmet'
 import Header from '../components/header'
 import './index.css'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faClock, faDrum, faWeightHanging } from '@fortawesome/free-solid-svg-icons'
+
+library.add([faClock, faDrum, faWeightHanging])
+
 const Layout = ({ children, data }) => (
     <div>
         <Helmet

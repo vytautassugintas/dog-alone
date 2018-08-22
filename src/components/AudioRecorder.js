@@ -4,6 +4,7 @@ import { Timer } from './Timer'
 import { Recorder } from '../utils/recorder'
 import { calculateDecibels } from '../utils/decibels'
 import { saveBlob, getFileNameAppendix } from '../utils/file'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const TIME_SLICE = 60
 const FFT = 512
@@ -125,13 +126,16 @@ export class AudioRecorder extends Component {
         return (
             <div>
                 <p>Audio controller</p>
+                <div>
+                <FontAwesomeIcon icon="clock" />
                 <Timer
                     ref={instance => {
                         this.timerInstanse = instance
                     }}
                 />
-                <div>{(recordingSize / 1000000).toFixed(2)} mb</div>
-                <div>{decibels.toFixed(2)} decibels</div>
+                </div>
+                <div><FontAwesomeIcon icon="weight-hanging" />{(recordingSize / 1000000).toFixed(2)} mb</div>
+                <div><FontAwesomeIcon icon="drum" />{decibels.toFixed(2)} decibels</div>
                 <div style={{ marginBottom: 12 }}>
                     <button onClick={this.toggleRecording}>
                         {isRecording ? 'Stop recording' : 'Start recording'}

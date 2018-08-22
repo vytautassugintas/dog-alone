@@ -25,6 +25,6 @@ export class Timer extends React.Component {
     }
 
     render() {
-        return <div>Seconds: {this.state.seconds}</div>
+        return <span>Seconds: {this.state.seconds}</span>
     }
 }
