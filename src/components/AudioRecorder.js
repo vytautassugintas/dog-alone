@@ -7,7 +7,7 @@ import { saveBlob, getFileNameAppendix } from '../utils/file'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const TIME_SLICE = 60
-const FFT = 512
+const FFT = 2048
 const AUDIO_FORMAT = 'mp4'
 
 export class AudioRecorder extends Component {
@@ -115,10 +115,6 @@ export class AudioRecorder extends Component {
 
         this.canvasCtx.lineTo(this.canvas.width, this.canvas.height / 2)
         this.canvasCtx.stroke()
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.interval)
     }
 
     render() {
