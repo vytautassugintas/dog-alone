@@ -4,5 +4,8 @@ export const calculateDecibels = (fft, data) => {
         return prev + (float * float);
     }, 0)
     const rms = Math.sqrt(total / fft)
+    if (!rms){
+        return 0;
+    } 
     return 20.0 * Math.log10(rms);
 }
