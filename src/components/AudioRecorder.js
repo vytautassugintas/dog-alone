@@ -7,7 +7,7 @@ import { saveBlob, getFileNameAppendix } from '../utils/file'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const TIME_SLICE = 60
-const FFT = 2048
+const FFT = 256;
 const AUDIO_FORMAT = 'mp4'
 const BYTES_TO_MEGABYTES = 1000000;
 
