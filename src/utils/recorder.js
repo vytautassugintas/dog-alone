@@ -1,5 +1,6 @@
 // @see {@link https://en.wikipedia.org/wiki/Bit_rate}
 const BITS_PER_SECOND = 96 * 1000
+const MAX_DECIBELS = -10;
 
 export class Recorder {
     constructor() {
@@ -8,6 +9,7 @@ export class Recorder {
         this.audioChunks = []
         this.audioCtx = new AudioContext()
         this.analyser = this.audioCtx.createAnalyser()
+        this.analyser.maxDecibels = MAX_DECIBELS;
         this.recordingSize = 0
         this.startTime
         this.endTime

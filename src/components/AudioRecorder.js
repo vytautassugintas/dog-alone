@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const TIME_SLICE = 60
 const FFT = 2048
 const AUDIO_FORMAT = 'mp4'
+const BYTES_TO_MEGABYTES = 1000000;
 
 export class AudioRecorder extends Component {
     constructor(props) {
@@ -130,7 +131,7 @@ export class AudioRecorder extends Component {
                     }}
                 />
                 </div>
-                <div><FontAwesomeIcon icon="weight-hanging" />{(recordingSize / 1000000).toFixed(2)} mb</div>
+                <div><FontAwesomeIcon icon="weight-hanging" />{(recordingSize / BYTES_TO_MEGABYTES).toFixed(2)} mb</div>
                 <div><FontAwesomeIcon icon="drum" />{decibels.toFixed(2)} decibels</div>
                 <div style={{ marginBottom: 12 }}>
                     <button onClick={this.toggleRecording}>
