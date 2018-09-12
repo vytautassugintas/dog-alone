@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Link from 'gatsby-link'
 import { Timer } from './Timer'
 import { Recorder } from '../utils/recorder'
 import { calculateDecibels } from '../utils/decibels'
