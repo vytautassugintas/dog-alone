@@ -9,6 +9,7 @@ const TIME_SLICE = 60;
 const FFT = 2048;
 const AUDIO_FORMAT = 'mp4';
 const BYTES_TO_MEGABYTES = 1000000;
+const dB_EMIT_TRESHOLD = -30;
 
 export class AudioRecorder extends Component {
   constructor(props) {
@@ -40,6 +41,11 @@ export class AudioRecorder extends Component {
       const { analyser, recordingSize } = this.mediaRecorder;
       analyser.getByteTimeDomainData(this.dataArray);
       const decibels = calculateDecibels(FFT, this.dataArray);
+
+      if (decibels >= dB_EMIT_TRESHOLD){
+          // todo: emit here
+      }
+      
       this.setState(() => ({
         recordingSize: recordingSize,
         decibels
