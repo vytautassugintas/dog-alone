@@ -31,7 +31,7 @@ export class AudioRecorder extends Component {
     this.startTimer = () => {};
     this.stopTimer = () => {};
   }
-  
+
   async componentDidMount() {
     this.mediaRecorder = new Recorder();
     await this.mediaRecorder.init();
@@ -44,10 +44,10 @@ export class AudioRecorder extends Component {
       analyser.getByteTimeDomainData(this.dataArray);
       const decibels = calculateDecibels(FFT, this.dataArray);
 
-      if (decibels >= dB_EMIT_TRESHOLD){
-        emitDecibelIncrease({decibels}); 
+      if (decibels >= dB_EMIT_TRESHOLD) {
+        emitDecibelIncrease({ decibels });
       }
-      
+
       this.setState(() => ({
         recordingSize: recordingSize,
         decibels
