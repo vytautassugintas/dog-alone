@@ -4,6 +4,7 @@ import { Recorder } from '../utils/recorder';
 import { calculateDecibels } from '../utils/decibels';
 import { saveBlob, getFileNameAppendix } from '../utils/file';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { emitDecibelIncrease } from '../utils/sockets';
 
 const TIME_SLICE = 60;
 const FFT = 2048;
@@ -30,6 +31,7 @@ export class AudioRecorder extends Component {
     this.startTimer = () => {};
     this.stopTimer = () => {};
   }
+  
   async componentDidMount() {
     this.mediaRecorder = new Recorder();
     await this.mediaRecorder.init();
@@ -43,7 +45,7 @@ export class AudioRecorder extends Component {
       const decibels = calculateDecibels(FFT, this.dataArray);
 
       if (decibels >= dB_EMIT_TRESHOLD){
-          // todo: emit here
+        emitDecibelIncrease({decibels}); 
       }
       
       this.setState(() => ({
