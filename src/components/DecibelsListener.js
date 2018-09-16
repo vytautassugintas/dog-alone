@@ -1,49 +1,44 @@
 import React, { Component } from 'react';
 import {
-  subscribeDecibelIncreased,
-  subscribeToHistory
+  subscribeToDecibelRecords,
+  subscribeToDecibelHistory
 } from '../utils/sockets';
 
 export class DecibelsListener extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
       history: []
     };
   }
 
   componentDidMount() {
-    subscribeDecibelIncreased(data => {
-      this.setState(prevState => ({
-        data: [data, ...prevState.data]
-      }));
-    });
-    subscribeToHistory(({ history }) => {
-      this.setState(() => ({
-        history
-      }));
+    subscribeToDecibelHistory(({ history }) => {
+      this.setState(
+        () => ({
+          history
+        }),
+        () => {
+          subscribeToDecibelRecords(data => {
+            this.setState(prevState => ({
+              history: [data, ...prevState.history]
+            }));
+          });
+        }
+      );
     });
   }
 
   render() {
-    const { data, history } = this.state;
-    const messages = data.map(({ message }, index) => (
-      <p key={index}>{message}</p>
-    ));
+    const { history } = this.state;
 
-    const logs = history.map(({ displayDate, dbLevel }, index) => (
+    const records = history.map(({ displayDate, dbLevel }, index) => (
       <p key={index}>
         {displayDate}
-        <strong>{dbLevel}</strong>
+        <strong> {dbLevel.toFixed(2)}</strong>
       </p>
     ));
 
-    return (
-      <div>
-        {messages}
-        <div>{logs}</div>
-      </div>
-    );
+    return <div>{records}</div>;
   }
 }

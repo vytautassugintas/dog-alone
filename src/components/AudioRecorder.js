@@ -71,7 +71,7 @@ export class AudioRecorder extends Component {
 
     this.canvas = this.refs.canvas;
     this.canvasCtx = this.refs.canvas.getContext('2d');
-    this.draw(this.dataArray, this.bufferLength);
+    this.draw(this.dataArray, this.bufferLength, true);
   }
 
   onSaveAudio() {
@@ -103,7 +103,7 @@ export class AudioRecorder extends Component {
     );
   }
 
-  draw(data, bufferLength) {
+  draw(data, bufferLength, isInitial = false) {
     this.canvasCtx.fillStyle = '#ffffff';
     this.canvasCtx.fillRect(
       0,
@@ -118,15 +118,18 @@ export class AudioRecorder extends Component {
     let sliceWidth = (this.canvas.width * 1.0) / bufferLength;
     let x = 0;
 
-    data.forEach((data, index) => {
-      let v = data / 128;
-      let y = (v * this.canvas.height) / 2;
+    if (!isInitial) {
+      data.forEach((data, index) => {
+        let v = data / 128;
+        let y = (v * this.canvas.height) / 2;
 
-      index === 0 ? this.canvasCtx.moveTo(x, y) : this.canvasCtx.lineTo(x, y);
+        index === 0 ? this.canvasCtx.moveTo(x, y) : this.canvasCtx.lineTo(x, y);
 
-      x += sliceWidth;
-    });
-
+        x += sliceWidth;
+      });
+    } else {
+      this.canvasCtx.moveTo(0, this.canvas.height / 2);
+    }
     this.canvasCtx.lineTo(this.canvas.width, this.canvas.height / 2);
     this.canvasCtx.stroke();
   }
@@ -135,22 +138,23 @@ export class AudioRecorder extends Component {
     const { isRecording, recorded, recordingSize, decibels } = this.state;
     return (
       <div>
-        <p>Audio controller</p>
-        <div>
-          <FontAwesomeIcon icon="clock" />
-          <Timer
-            ref={instance => {
-              this.timerInstanse = instance;
-            }}
-          />
-        </div>
-        <div>
-          <FontAwesomeIcon icon="weight-hanging" />
-          {(recordingSize / BYTES_TO_MEGABYTES).toFixed(2)} mb
-        </div>
-        <div>
-          <FontAwesomeIcon icon="drum" />
-          {decibels.toFixed(2)} decibels
+        <div className="info-wrapper">
+          <span className="info-item">
+            <FontAwesomeIcon className="icon" icon="clock" />
+            <Timer
+              ref={instance => {
+                this.timerInstanse = instance;
+              }}
+            />
+          </span>
+          <span className="info-item">
+            <FontAwesomeIcon className="icon" icon="weight-hanging" />
+            {(recordingSize / BYTES_TO_MEGABYTES).toFixed(2)} mb
+          </span>
+          <span className="info-item">
+            <FontAwesomeIcon className="icon" icon="drum" />
+            {decibels.toFixed(2)} decibels
+          </span>
         </div>
         <div style={{ marginBottom: 12 }}>
           <button onClick={this.toggleRecording}>
@@ -168,7 +172,7 @@ export class AudioRecorder extends Component {
           )}
         </div>
         <div>
-          <canvas ref="canvas" width={640} height={120} />
+          <canvas ref="canvas" width={640} height={80} />
         </div>
       </div>
     );
