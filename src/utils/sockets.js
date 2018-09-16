@@ -13,3 +13,9 @@ export const subscribeDecibelIncreased = cb => {
     cb(payload);
   });
 };
+
+export const subscribeToHistory = cb => {
+  socket.on('decibelsLog', payload => {
+    cb(payload);
+  });
+};

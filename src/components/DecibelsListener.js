@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { subscribeDecibelIncreased } from '../utils/sockets';
+import {
+  subscribeDecibelIncreased,
+  subscribeToHistory
+} from '../utils/sockets';
 
 export class DecibelsListener extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
+      history: []
     };
   }
 
@@ -15,14 +19,31 @@ export class DecibelsListener extends Component {
         data: [data, ...prevState.data]
       }));
     });
+    subscribeToHistory(({ history }) => {
+      this.setState(() => ({
+        history
+      }));
+    });
   }
 
   render() {
-    const { data } = this.state;
+    const { data, history } = this.state;
     const messages = data.map(({ message }, index) => (
       <p key={index}>{message}</p>
     ));
 
-    return <div>{messages}</div>;
+    const logs = history.map(({ displayDate, dbLevel }, index) => (
+      <p key={index}>
+        {displayDate}
+        <strong>{dbLevel}</strong>
+      </p>
+    ));
+
+    return (
+      <div>
+        {messages}
+        <div>{logs}</div>
+      </div>
+    );
   }
 }

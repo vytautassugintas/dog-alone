@@ -48,11 +48,14 @@ export class AudioRecorder extends Component {
       analyser.getByteTimeDomainData(this.dataArray);
       const decibels = calculateDecibels(FFT, this.dataArray);
 
-      if (decibels >= dB_EMIT_TRESHOLD && getTimeDiff({eventTime}) > MIN_TIME_FRAME ) {
+      if (
+        decibels >= dB_EMIT_TRESHOLD &&
+        getTimeDiff({ eventTime }) > MIN_TIME_FRAME
+      ) {
         emitDecibelIncrease({ decibels });
         eventTime = new Date();
       }
-      
+
       this.setState(() => ({
         recordingSize: recordingSize,
         decibels
@@ -110,7 +113,7 @@ export class AudioRecorder extends Component {
     );
     this.canvasCtx.lineWidth = 2;
     this.canvasCtx.strokeStyle = '#000000';
-    this.canvasCtx.beginPath()
+    this.canvasCtx.beginPath();
 
     let sliceWidth = (this.canvas.width * 1.0) / bufferLength;
     let x = 0;
