@@ -5,11 +5,13 @@ import { calculateDecibels } from '../utils/decibels';
 import { saveBlob, getFileNameAppendix } from '../utils/file';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { emitDecibelIncrease } from '../utils/sockets';
+import { getTimeDiff } from '../utils/time';
 
 const TIME_SLICE = 60;
 const FFT = 2048;
 const AUDIO_FORMAT = 'mp4';
 const BYTES_TO_MEGABYTES = 1000000;
+const MIN_TIME_FRAME = 3;
 const dB_EMIT_TRESHOLD = -30;
 
 export class AudioRecorder extends Component {
@@ -39,15 +41,18 @@ export class AudioRecorder extends Component {
     this.mediaRecorder.analyser.fftSize = FFT;
     this.bufferLength = this.mediaRecorder.analyser.frequencyBinCount;
 
+    let eventTime = new Date();
+
     this.mediaRecorder.onDataAvailable = () => {
       const { analyser, recordingSize } = this.mediaRecorder;
       analyser.getByteTimeDomainData(this.dataArray);
       const decibels = calculateDecibels(FFT, this.dataArray);
 
-      if (decibels >= dB_EMIT_TRESHOLD) {
+      if (decibels >= dB_EMIT_TRESHOLD && getTimeDiff({eventTime}) > MIN_TIME_FRAME ) {
         emitDecibelIncrease({ decibels });
+        eventTime = new Date();
       }
-
+      
       this.setState(() => ({
         recordingSize: recordingSize,
         decibels
@@ -96,22 +101,22 @@ export class AudioRecorder extends Component {
   }
 
   draw(data, bufferLength) {
-    this.canvasCtx.fillStyle = 'rgb(200, 200, 200)';
+    this.canvasCtx.fillStyle = '#ffffff';
     this.canvasCtx.fillRect(
       0,
       0,
       this.refs.canvas.width,
       this.refs.canvas.height
     );
-    this.canvasCtx.lineWidth = 1;
-    this.canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
-    this.canvasCtx.beginPath();
+    this.canvasCtx.lineWidth = 2;
+    this.canvasCtx.strokeStyle = '#000000';
+    this.canvasCtx.beginPath()
 
     let sliceWidth = (this.canvas.width * 1.0) / bufferLength;
     let x = 0;
 
     data.forEach((data, index) => {
-      let v = data / 128.0;
+      let v = data / 128;
       let y = (v * this.canvas.height) / 2;
 
       index === 0 ? this.canvasCtx.moveTo(x, y) : this.canvasCtx.lineTo(x, y);
@@ -160,7 +165,7 @@ export class AudioRecorder extends Component {
           )}
         </div>
         <div>
-          <canvas ref="canvas" width={640} height={480} />
+          <canvas ref="canvas" width={640} height={120} />
         </div>
       </div>
     );
