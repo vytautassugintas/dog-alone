@@ -9,9 +9,19 @@ body {
 }
 
 .info-item {
-  padding: 12px;
+  padding-right: 12px;
 }
 
 .icon {
-  padding: 0 6px;
+  padding-right: 6px;
+}
+
+.record {
+  text-align: left;
+  margin: 12px;
+}
+
+.date {
+  color: #636e72;
+  font-size: 14px;
 }

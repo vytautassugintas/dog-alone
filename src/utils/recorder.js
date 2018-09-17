@@ -6,11 +6,9 @@ export class Recorder {
   constructor() {
     this.mediaRecorder = {};
     this.source = {};
-    this.audioChunks = [];
     this.audioCtx = new AudioContext();
     this.analyser = this.audioCtx.createAnalyser();
     this.analyser.maxDecibels = MAX_DECIBELS;
-    this.recordingSize = 0;
     this.startTime;
     this.endTime;
 
@@ -22,9 +20,7 @@ export class Recorder {
     this.mediaRecorder = await this.createRecorder();
 
     this.mediaRecorder.addEventListener('dataavailable', event => {
-      this.audioChunks.push(event.data);
       this.onDataAvailable(event);
-      this.recordingSize += event.data.size;
     });
 
     this.mediaRecorder.addEventListener('stop', () => {
@@ -51,10 +47,6 @@ export class Recorder {
   stop() {
     this.endTime = new Date();
     this.mediaRecorder.stop();
-  }
-
-  getAudioBlob() {
-    return new Blob(this.audioChunks);
   }
 
   getAudioUrl() {
