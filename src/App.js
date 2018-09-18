@@ -7,7 +7,7 @@ import { DecibelsListener } from './components/DecibelsListener';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="App container">
         <AudioRecorder />
         <DecibelsListener />
       </div>

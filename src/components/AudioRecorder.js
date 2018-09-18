@@ -8,8 +8,6 @@ import { getTimeDiff } from '../utils/time';
 
 const TIME_SLICE = 60;
 const FFT = 2048;
-const AUDIO_FORMAT = 'mp4';
-const BYTES_TO_MEGABYTES = 1000000;
 const MIN_TIME_FRAME = 3;
 const dB_EMIT_TRESHOLD = -30;
 
@@ -45,6 +43,7 @@ export class AudioRecorder extends Component {
 
       if (
         decibels >= dB_EMIT_TRESHOLD &&
+        decibels !== 0 &&
         getTimeDiff({ eventTime }) > MIN_TIME_FRAME
       ) {
         emitDecibelIncrease({ decibels });
@@ -80,10 +79,10 @@ export class AudioRecorder extends Component {
 
   draw(data, bufferLength, isInitial = false) {
     const { width, height } = this.refs.canvas;
-    this.canvasCtx.fillStyle = '#ffffff';
+    this.canvasCtx.fillStyle = '#596275';
     this.canvasCtx.fillRect(0, 0, width, height);
     this.canvasCtx.lineWidth = 2;
-    this.canvasCtx.strokeStyle = '#000000';
+    this.canvasCtx.strokeStyle = '#38ada9';
     this.canvasCtx.beginPath();
 
     let sliceWidth = (width * 1.0) / bufferLength;
@@ -108,14 +107,18 @@ export class AudioRecorder extends Component {
   render() {
     const { isRecording, decibels } = this.state;
     return (
-      <div>
+      <div className='box'>
+        <h3>Monitoring</h3>
         <div style={{ marginBottom: 12 }}>
-          <button onClick={this.toggleRecording}>
+          <button className='button button_primary' onClick={this.toggleRecording}>
+          <span className='button_icon'>
+            <FontAwesomeIcon className="icon" icon={isRecording ? 'stop' : 'play'} />
+          </span>
             {isRecording ? 'Stop monitoring' : 'Start monitoring'}
           </button>
         </div>
-        <div>
-          <canvas ref="canvas" width={640} height={80} />
+        <div style={{display: 'none'}}>
+          <canvas ref="canvas" width={320} height={80} />
         </div>
         <div className="info-wrapper">
           <span className="info-item">

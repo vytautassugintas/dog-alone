@@ -8,10 +8,12 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faWeightHanging,
   faDrum,
-  faClock
+  faClock,
+  faPlay,
+  faStop
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faWeightHanging, faDrum, faClock);
+library.add(faWeightHanging, faDrum, faClock, faPlay, faStop);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
