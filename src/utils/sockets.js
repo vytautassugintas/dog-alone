@@ -1,6 +1,6 @@
 import openSocket from 'socket.io-client';
 
-const SOCKET_HOST = process.env.SOCKET_HOST || 'http://localhost:3000';
+const SOCKET_HOST = process.env.SOCKET_HOST || 'http://ramplis.sytes.net:3000';
 
 const socket = openSocket(SOCKET_HOST);
 
