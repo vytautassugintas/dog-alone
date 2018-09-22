@@ -53,11 +53,11 @@ export class AudioRecorder extends Component {
       this.setState(() => ({
         decibels
       }));
-      this.draw(this.dataArray, this.bufferLength);
+      // this.draw(this.dataArray, this.bufferLength);
     };
 
-    this.canvasCtx = this.refs.canvas.getContext('2d');
-    this.draw(this.dataArray, this.bufferLength, true);
+    // this.canvasCtx = this.refs.canvas.getContext('2d');
+    // this.draw(this.dataArray, this.bufferLength, true);
   }
 
   toggleRecording() {
@@ -107,17 +107,23 @@ export class AudioRecorder extends Component {
   render() {
     const { isRecording, decibels } = this.state;
     return (
-      <div className='box'>
+      <div className="box">
         <h3>Monitoring</h3>
         <div style={{ marginBottom: 12 }}>
-          <button className='button button_primary' onClick={this.toggleRecording}>
-          <span className='button_icon'>
-            <FontAwesomeIcon className="icon" icon={isRecording ? 'stop' : 'play'} />
-          </span>
+          <button
+            className="button button_primary"
+            onClick={this.toggleRecording}
+          >
+            <span className="button_icon">
+              <FontAwesomeIcon
+                className="icon"
+                icon={isRecording ? 'stop' : 'play'}
+              />
+            </span>
             {isRecording ? 'Stop monitoring' : 'Start monitoring'}
           </button>
         </div>
-        <div style={{display: 'none'}}>
+        <div style={{ display: 'none' }}>
           <canvas ref="canvas" width={320} height={80} />
         </div>
         <div className="info-wrapper">

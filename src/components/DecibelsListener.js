@@ -3,6 +3,7 @@ import {
   subscribeToDecibelRecords,
   subscribeToDecibelHistory
 } from '../utils/sockets';
+import { HistoryChart } from './HistoryChart';
 
 export class DecibelsListener extends Component {
   constructor(props) {
@@ -49,9 +50,9 @@ export class DecibelsListener extends Component {
             {records}
           </div>
         </div>
-
-        <div className="column" />
-        <div className="column" />
+        <div className="column-6">
+          <HistoryChart history={history} />
+        </div>
       </div>
     );
   }
