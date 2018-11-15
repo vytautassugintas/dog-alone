@@ -14,7 +14,7 @@ const createChartData = ({history = []}) => ({
           y: d.dbLevel.toFixed(2)
         }))
       }
-    ]
+    ] 
 })
 
 export class HistoryChart extends Component {
@@ -111,7 +111,6 @@ export class HistoryChart extends Component {
   }
 
   render() {
-    const { history } = this.props;
     const { value } = this.state;
 
     return (
