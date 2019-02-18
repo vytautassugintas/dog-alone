@@ -1,21 +1,21 @@
-import openSocket from 'socket.io-client';
+import openSocket from "socket.io-client";
 
-const SOCKET_HOST = process.env.SOCKET_HOST || 'localhost:3000';
+const SOCKET_HOST = process.env.SOCKET_HOST || "localhost:3000";
 
 const socket = openSocket(SOCKET_HOST);
 
 export const emitDecibelIncrease = ({ decibels }) => {
-  socket.emit('decibelIncrease', { dbLevel: decibels });
+  socket.emit("decibelIncrease", { dbLevel: decibels });
 };
 
 export const subscribeToDecibelRecords = cb => {
-  socket.on('decibelIncreased', payload => {
+  socket.on("decibelIncreased", payload => {
     cb(payload);
   });
 };
 
 export const subscribeToDecibelHistory = cb => {
-  socket.on('decibelsLog', payload => {
+  socket.on("decibelsLog", payload => {
     cb(payload);
   });
 };

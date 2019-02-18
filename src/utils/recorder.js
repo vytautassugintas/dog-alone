@@ -9,8 +9,8 @@ export class Recorder {
     this.audioCtx = new AudioContext();
     this.analyser = this.audioCtx.createAnalyser();
     this.analyser.maxDecibels = MAX_DECIBELS;
-    this.startTime;
-    this.endTime;
+    this.startTime = null;
+    this.endTime = null;
 
     this.onDataAvailable = () => {};
     this.onStop = () => {};
@@ -19,11 +19,11 @@ export class Recorder {
   async init() {
     this.mediaRecorder = await this.createRecorder();
 
-    this.mediaRecorder.addEventListener('dataavailable', event => {
+    this.mediaRecorder.addEventListener("dataavailable", event => {
       this.onDataAvailable(event);
     });
 
-    this.mediaRecorder.addEventListener('stop', () => {
+    this.mediaRecorder.addEventListener("stop", () => {
       this.onStop();
     });
   }
