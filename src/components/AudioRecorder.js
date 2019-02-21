@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { Timer } from './Timer';
-import { Recorder } from '../utils/recorder';
-import { calculateDecibels } from '../utils/decibels';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { emitDecibelIncrease } from '../utils/sockets';
-import { getTimeDiff } from '../utils/time';
+import React, { Component } from "react";
+import { Timer } from "./Timer";
+import { Recorder } from "../utils/recorder";
+import { calculateDecibels } from "../utils/decibels";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { emitDecibelIncrease } from "../utils/sockets";
+import { getTimeDiff } from "../utils/time";
 
 const TIME_SLICE = 60;
 const FFT = 2048;
@@ -46,6 +46,7 @@ export class AudioRecorder extends Component {
         decibels !== 0 &&
         getTimeDiff({ eventTime }) > MIN_TIME_FRAME
       ) {
+        console.log(analyser);
         emitDecibelIncrease({ decibels });
         eventTime = new Date();
       }
@@ -56,7 +57,7 @@ export class AudioRecorder extends Component {
       this.draw(this.dataArray, this.bufferLength);
     };
 
-    this.canvasCtx = this.refs.canvas.getContext('2d');
+    this.canvasCtx = this.refs.canvas.getContext("2d");
     this.draw(this.dataArray, this.bufferLength, true);
   }
 
@@ -79,10 +80,10 @@ export class AudioRecorder extends Component {
 
   draw(data, bufferLength, isInitial = false) {
     const { width, height } = this.refs.canvas;
-    this.canvasCtx.fillStyle = '#596275';
+    this.canvasCtx.fillStyle = "#596275";
     this.canvasCtx.fillRect(0, 0, width, height);
     this.canvasCtx.lineWidth = 2;
-    this.canvasCtx.strokeStyle = '#38ada9';
+    this.canvasCtx.strokeStyle = "#38ada9";
     this.canvasCtx.beginPath();
 
     let sliceWidth = (width * 1.0) / bufferLength;
@@ -117,13 +118,13 @@ export class AudioRecorder extends Component {
             <span className="button_icon">
               <FontAwesomeIcon
                 className="icon"
-                icon={isRecording ? 'stop' : 'play'}
+                icon={isRecording ? "stop" : "play"}
               />
             </span>
-            {isRecording ? 'Stop monitoring' : 'Start monitoring'}
+            {isRecording ? "Stop monitoring" : "Start monitoring"}
           </button>
         </div>
-        <div style={{ display: '' }}>
+        <div style={{ display: "" }}>
           <canvas ref="canvas" width={320} height={80} />
         </div>
         <div className="info-wrapper">
