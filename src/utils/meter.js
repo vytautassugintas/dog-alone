@@ -5,7 +5,7 @@ let WIDTH = 500;
 let HEIGHT = 50;
 let rafID = null;
 
-window.onload = function() {
+export function init({ onExcessVolume = () => {} }) {
   canvasContext = document.getElementById("meter").getContext("2d");
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
@@ -29,43 +29,48 @@ window.onload = function() {
           optional: []
         }
       },
-      gotStream,
-      didntGetStream
+      function onSuccess(stream) {
+        mediaStreamSource = audioContext.createMediaStreamSource(stream);
+
+        meter = createAudioMeter({ audioContext, onExcessVolume });
+        mediaStreamSource.connect(meter);
+
+        drawLoop();
+      },
+      function onError() {
+        alert("Stream generation failed.");
+      }
     );
   } catch (e) {
     alert("getUserMedia threw exception :" + e);
   }
-};
-
-function didntGetStream() {
-  alert("Stream generation failed.");
 }
-
 let mediaStreamSource = null;
 
-function gotStream(stream) {
-  mediaStreamSource = audioContext.createMediaStreamSource(stream);
-
-  meter = createAudioMeter(audioContext);
-  mediaStreamSource.connect(meter);
-
-  drawLoop();
-}
-
-function drawLoop(time) {
+function drawLoop() {
   canvasContext.clearRect(0, 0, WIDTH, HEIGHT);
 
-  if (meter.checkClipping()) canvasContext.fillStyle = "red";
-  else canvasContext.fillStyle = "green";
+  if (meter.checkClipping()) {
+    canvasContext.fillStyle = "#e74c3c";
+  } else {
+    canvasContext.fillStyle = "#38ada9";
+  }
 
-  canvasContext.fillRect(0, 0, meter.volume * WIDTH * 1.4, HEIGHT);
+  canvasContext.fillRect(0, 0, meter.volume * WIDTH * 2, HEIGHT);
 
   rafID = window.requestAnimationFrame(drawLoop);
 }
 
-function createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
+function createAudioMeter({
+  audioContext,
+  onExcessVolume = () => {},
+  clipLevel,
+  averaging,
+  clipLag
+}) {
   let processor = audioContext.createScriptProcessor(512);
   processor.onaudioprocess = volumeAudioProcess;
+  processor.onExcessVolume = onExcessVolume;
   processor.clipping = false;
   processor.lastClip = 0;
   processor.volume = 0;
@@ -76,9 +81,14 @@ function createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
   processor.connect(audioContext.destination);
 
   processor.checkClipping = function() {
-    if (!this.clipping) return false;
-    if (this.lastClip + this.clipLag < window.performance.now())
+    if (!this.clipping) {
+      return false;
+    }
+
+    if (this.lastClip + this.clipLag < window.performance.now()) {
       this.clipping = false;
+    }
+
     return this.clipping;
   };
 
@@ -108,7 +118,8 @@ function volumeAudioProcess(event) {
   let rms = Math.sqrt(sum / bufLength);
 
   this.volume = Math.max(rms, this.volume * this.averaging);
+
   if (this.volume > 0.1) {
-    console.log(this.volume);
+    this.onExcessVolume(this.volume);
   }
 }
