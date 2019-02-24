@@ -1,14 +1,15 @@
 let audioContext = null;
 let meter = null;
 let canvasContext = null;
-let WIDTH = 500;
-let HEIGHT = 50;
 let rafID = null;
+let mediaStreamSource = null;
 
-export function init({ onExcessVolume = () => {} }) {
+const WIDTH = 500;
+const HEIGHT = 50;
+
+export function init({ onExcessVolume = () => {}, shouldDraw = true }) {
   canvasContext = document.getElementById("meter").getContext("2d");
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
   audioContext = new AudioContext();
 
   try {
@@ -34,8 +35,9 @@ export function init({ onExcessVolume = () => {} }) {
 
         meter = createAudioMeter({ audioContext, onExcessVolume });
         mediaStreamSource.connect(meter);
-
-        drawLoop();
+        if (shouldDraw) {
+          drawLoop();
+        }
       },
       function onError() {
         alert("Stream generation failed.");
@@ -45,7 +47,6 @@ export function init({ onExcessVolume = () => {} }) {
     alert("getUserMedia threw exception :" + e);
   }
 }
-let mediaStreamSource = null;
 
 function drawLoop() {
   canvasContext.clearRect(0, 0, WIDTH, HEIGHT);
@@ -69,6 +70,7 @@ function createAudioMeter({
   clipLag
 }) {
   let processor = audioContext.createScriptProcessor(512);
+
   processor.onaudioprocess = volumeAudioProcess;
   processor.onExcessVolume = onExcessVolume;
   processor.clipping = false;

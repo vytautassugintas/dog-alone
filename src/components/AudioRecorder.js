@@ -46,7 +46,6 @@ export class AudioRecorder extends Component {
         decibels !== 0 &&
         getTimeDiff({ eventTime }) > MIN_TIME_FRAME
       ) {
-        console.log(analyser);
         emitDecibelIncrease({ decibels });
         eventTime = new Date();
       }

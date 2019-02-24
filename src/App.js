@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "./App.css";
 import { AudioRecorder } from "./components/AudioRecorder";
-import { DecibelsListener } from "./components/DecibelsListener";
 
 const LazyVolumeMeter = React.lazy(() => import("./components/VolumeMeter"));
+const LazyDecibelsListener = React.lazy(() =>
+  import("./components/DecibelsListener")
+);
 
 function App() {
   const [ready, setReady] = useState(false);
@@ -13,7 +15,7 @@ function App() {
         <React.Suspense fallback="">
           <LazyVolumeMeter />
           <AudioRecorder />
-          <DecibelsListener />
+          <LazyDecibelsListener />
         </React.Suspense>
       ) : (
         <button onClick={() => setReady(true)}> Ready </button>

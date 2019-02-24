@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   subscribeToDecibelRecords,
   subscribeToDecibelHistory
-} from '../utils/sockets';
-import { HistoryChart } from './HistoryChart';
+} from "../utils/sockets";
+import { HistoryChart } from "./HistoryChart";
 
-export class DecibelsListener extends Component {
+export default class DecibelsListener extends Component {
   constructor(props) {
     super(props);
     this.state = {
