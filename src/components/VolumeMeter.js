@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { init as initVolumeMeter } from "../utils/meter";
 
-export default function VolumeMeter() {
+export function VolumeMeter() {
   function onExcessVolume(volume) {}
 
   useEffect(() => {

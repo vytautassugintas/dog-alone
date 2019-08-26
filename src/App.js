@@ -1,24 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import { AudioRecorder } from "./components/AudioRecorder";
 
-const LazyVolumeMeter = React.lazy(() => import("./components/VolumeMeter"));
-const LazyDecibelsListener = React.lazy(() =>
-  import("./components/DecibelsListener")
-);
+import { initSocket } from "./utils/sockets";
+
+import { AudioRecorder } from "./components/AudioRecorder";
+import { DecibelsListener } from "./components/DecibelsListener";
+import { VolumeMeter } from "./components/VolumeMeter";
 
 function App() {
   const [ready, setReady] = useState(false);
+
+  // if (ready) {
+  //   initSocket();
+  // }
+
   return (
     <div className="App container">
       {ready ? (
         <React.Suspense fallback="">
-          <LazyVolumeMeter />
+          <VolumeMeter />
           <AudioRecorder />
-          <LazyDecibelsListener />
+          <DecibelsListener />
         </React.Suspense>
       ) : (
-        <button onClick={() => setReady(true)}> Ready </button>
+        <button
+          onClick={() => {
+            setReady(true);
+          }}
+        >
+          {" "}
+          Ready{" "}
+        </button>
       )}
     </div>
   );

@@ -1,8 +1,12 @@
-import openSocket from "socket.io-client";
+import io from "socket.io-client";
 
 const SOCKET_HOST = process.env.SOCKET_HOST || "localhost:3000";
 
-const socket = openSocket(SOCKET_HOST);
+let socket;
+
+export function initSocket() {
+  socket = io(SOCKET_HOST);
+}
 
 export const emitDecibelIncrease = ({ decibels }) => {
   socket.emit("decibelIncrease", { dbLevel: decibels });
